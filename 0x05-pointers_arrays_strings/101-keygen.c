@@ -1,62 +1,170 @@
-#include <math.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include <time.h>
+#include <stdlib.h>
+
+char passwordType[1];
+
+int generateRandomNumbers();
+
+char password[512];
+
+char passwordLength[];
+
+void printPassword();
+
+int main() {
 
 
-void randomPasswordGeneration(int N)
-{
-    
-    int i = 0;
-
-    int randomizer = 0;
-
-    
-    srand((unsigned int)(time(NULL)));
-
-  
-    char numbers[] = "0123456789";
-    char letter[] = "abcdefghijklmnoqprstuvwyzx";
-    char LETTER[] = "ABCDEFGHIJKLMNOQPRSTUYWVZX";
-    char symbols[] = "!@#$^&*?";
-    char password[N];
-
- 
-    randomizer = rand() % 4;
+    srand(time(NULL));
 
   
-    for (i = 0; i < N; i++) {
+    gets(passwordType);
 
-        if (randomizer == 1) {
-            password[i] = numbers[rand() % 10];
-            randomizer = rand() % 4;
-            printf("%c", password[i]);
-        }
-        else if (randomizer == 2) {
-            password[i] = symbols[rand() % 8];
-            randomizer = rand() % 4;
-            printf("%c", password[i]);
-        }
-	 else if (randomizer == 3) {
-            password[i] = LETTER[rand() % 26];
-            randomizer = rand() % 4;
-            printf("%c", password[i]);
-        }
-        else {
-            password[i] = letter[rand() % 26];
-            randomizer = rand() % 4;
-            printf("%c", password[i]);
-        }
+    printf("Enter the password length\n");
+
+
+    gets(passwordLength);
+
+    printf("How many passwords do you want??\n");
+
+    char passwordTimes[1];
+
+    gets(passwordTimes);
+
+    int m = atoi(passwordTimes);
+
+    printf("%d",m);
+
+    while (m>0){
+
+        printPassword();
+
+        m--;
+
+        _sleep(1000);
+
     }
-}
 
-int main()
-{
+    char isAgain[1];
 
-    int N = 10;
+    printf("Do you want to generate password again(y/n)\n");
 
 
-    randomPasswordGeneration(N);
+    gets(isAgain);
+
+    if (isAgain[0] == 'y'){
+
+        main();
+
+    } else if (isAgain[0] == 'n'){
+
+        printf("Thanks for using my password generator\n");
+
+    } else{
+
+        printf("Invalid input\n");
+
+    }
+
 
     return 0;
+
 }
+
+
+int generateRandomNumbers(){
+
+    int random;
+
+    int r;
+
+    switch (passwordType[0]){
+
+        case 'a':
+
+            random = (rand() % (122 + 1 - 97)) + 97;
+
+            break;
+
+        case 'b':
+
+            random = (rand() % (90 + 1 - 65)) + 65;
+
+            break;
+
+        case 'c':
+
+            random = (rand() % (57 + 1 - 48)) + 48;
+
+            break;
+
+        case 'd':
+
+            while (1){
+
+                r = (rand() % (256 + 1 - 0)) + 0;
+
+                if (((r<=47) && (r>=33)) || ((r<=64) && (r>=58)) || ((r<=96) && (r>=91)) || ((r<=175) && (r>=123)) || ((r<=254) && (r>=178))){
+
+                    random = r;
+
+                    break;
+
+                }
+
+            }
+
+            break;
+
+        case 'e':
+
+            random = (rand() % (126 + 1 - 33)) + 33;
+
+            break;
+
+        case 'f':
+
+            while (1){
+
+                r = (rand() % (256 + 1 - 0)) + 0;
+
+                if (((r<=90) && (r>=65)) || ((r<=122) && (r>=97))){
+
+                    random = r;
+
+                    break;
+
+                }
+
+            }
+
+            break;
+
+        case 'g':
+
+            while (1){
+
+                r = (rand() % (256 + 1 - 0)) + 0;
+
+                if (((r<=57) && (r>=48)) || ((r<=122) && (r>=97))){
+
+                    random = r;
+
+                    break;
+
+                }
+
+            }
+
+            break;
+
+        case 'h':
+
+            while (1){
+
+                r = (rand() % (256 + 1 - 0)) + 0;
+
+                if (((r<=122) && (r>=97)) ||((r<=47) && (r>=33)) || ((r<=64) && (r>=58)) || ((r<=96) && (r>=91)) || ((r<=175) && (r>=123)) || ((r<=254) && (r>=178))){
+
+                    random = r;
+
