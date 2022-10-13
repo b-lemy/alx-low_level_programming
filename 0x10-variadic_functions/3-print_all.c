@@ -1,83 +1,120 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "variadic_functions.h"
-/**
- * print_i - prints int
- * @list: arguement of list
- * @s: seperator
- * Return: none
- */
-void print_i(va_list list, char *s)
-{
-	printf("%s%d", s, va_arg(list, int));
-}
-/**
- * print_c - prints char
- * @list: arguement char
- * @sep: seperator
- */
-void print_c(va_list list, char *sep)
-{
-	printf("%s%c", sep, va_arg(list, int));
-}
-/**
- * print_s - prints string
- * @sep: seperator
- * @list: list to print
- * Return: none
- */
-void print_s(va_list list, char *sep)
-{
-	char *s;
 
-	s = va_arg(list, char *);
-	if (s == NULL)
-		s = "(nil)";
-	printf("%s%s", sep, s);
-}
 /**
- * print_f - prints floats
- * @sep: float to print
- * @list: next arguement of list to print
- * Return: none
- */
-void print_f(va_list list, char *sep)
+ * print_char - print a char
+ *
+ * @arg: a list of argument pointing
+ *      to the character to be printed
+ *
+ * Return: nothing
+*/
+
+void print_char(va_list arg)
 {
-	printf("%s%f", sep, va_arg(list, double));
+	char c = va_arg(arg, int);
+
+	printf("%c", c);
 }
+
 /**
- * print_all - prints out all stuff
- * @format: format is list of types of arguements
- */
+ * print_int - print an integer
+ *
+ * @arg: a list of argument pointing
+ *      to the character to be printed
+ *
+ * Return: nothing
+*/
+
+void print_int(va_list arg)
+{
+	int n = va_arg(arg, int);
+
+	printf("%d", n);
+}
+
+/**
+ * print_float - print a float
+ *
+ * @arg: a list of argument pointing
+ *      to the character to be printed
+ *
+ * Return: nothing
+*/
+
+void print_float(va_list arg)
+{
+	float n = va_arg(arg, double);
+
+	printf("%f", n);
+}
+
+/**
+ * print_string - print a string
+ *
+ * @arg: a list of argument pointing
+ *      to the character to be printed
+ *
+ * Return: nothing
+*/
+
+void print_string(va_list arg)
+{
+	char *str = va_arg(arg, char *);
+
+	if (str == NULL)
+	{
+		printf("(nil)");
+		return;
+	}
+	printf("%s", str);
+}
+
+/**
+ * print_all - a function that prints anything
+ *
+ * @format: A string of character representing
+ *          the argument types
+ *
+ * Description: If any argument not of type char,
+ *              int, float or char * is ignored
+ *
+ * Return: nothing
+*/
+
 void print_all(const char * const format, ...)
 {
-	va_list list;
-	char *sep;
-	int i, j;
-	fm_t fm[] = {
-		{"c", print_c},
-		{"i", print_i},
-		{"f", print_f},
-		{"s", print_s},
-		{NULL, NULL}
+	va_list ap;
+	int i = 0, j = 0;
+	char *separator = "";
+	func_printer funcs[] = {
+		{"c", print_char},
+		{"i", print_int},
+		{"f", print_float},
+		{"s", print_string}
 	};
-	va_start(list, format);
-	i = 0;
-	sep = "";
-	while (format != NULL && format[i] != '\0')
+
+	va_start(ap, format);
+
+	while (format && format[i])
 	{
 		j = 0;
-		while (j < 4)
-		{
-			if (format[i] == *(fm[j]).fm)
-			{
-				fm[j].p(list, sep);
-				sep = ", ";
-			}
+		/**
+		 * 4 equals to the number of funcs present
+		 * so if j is less than four and our current
+		 * format is not equal to format in funcs
+		 * then j becomes j + 1
+		 */
+		while (j < 4 && (format[i] != *(funcs[j].symbol)))
 			j++;
+		if (j < 4)
+		{
+			printf("%s", separator);
+			funcs[j].print_func(ap);
+			separator = ", ";
 		}
 		i++;
 	}
 	printf("\n");
-	va_end(list);
+
+	va_end(ap);
 }
