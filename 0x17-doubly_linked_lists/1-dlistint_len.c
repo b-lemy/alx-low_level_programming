@@ -1,6 +1,5 @@
 /*
  * File: 1-dlistint_len.c
- * Auth: Amos Mwongela Gabriel
  */
 
 #include "lists.h"
