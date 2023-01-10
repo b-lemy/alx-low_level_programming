@@ -1,6 +1,5 @@
 /*
  * File: 0-hash_table_create.c
- * Auth: Amos Mwongela Gabriel
  */
 
 #include "hash_tables.h"
